@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  telegram-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./data:/app/data
+    restart: always
+    ports:
+      - "5555:5555"
+    image: modder_bot
