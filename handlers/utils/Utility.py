@@ -1,11 +1,11 @@
 import check_swear
 import nltk
-import pandas as pd
+# import pandas as pd
 
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.tokenize import RegexpTokenizer
-from sklearn.feature_extraction.text import TfidfVectorizer
+# from sklearn.feature_extraction.text import TfidfVectorizer
 
 
 
