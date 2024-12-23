@@ -10,7 +10,7 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, FSInputFile, URLInputFile, ChatPermissions, ChatMemberUpdated, MessageReactionUpdated
 
 from handlers.utils.Utility import Censorship
-from database.chats_admins import AdminsManager
+# from database.chats_admins import AdminsManager
 
 
 router_channel = Router()
@@ -20,7 +20,7 @@ chats_me_admin = [-1002400455551]
 chat_admins = {-1002400455551: [5417896659, 1608080468]}
 
 @router_channel.message(lambda message: message.chat.id in chats_me_admin and message.content_type == "text")
-async def handle_channel_post(msg: Message):
+async def handle_channel_post(msg: Message, admins_manager):
     flag = await Censorship.main_filter(msg.text)
 
     if flag >= float(0.34):
@@ -31,7 +31,7 @@ async def handle_channel_post(msg: Message):
     # print(*msg.chat, sep='\n')
 
     if msg.text.startswith("/ban"):
-        if msg.from_user.id in chat_admins[msg.chat.id]:
+        if msg.from_user.id in admins_manager.chat_admins[msg.chat.id]:
             if msg.reply_to_message:
                 await msg.bot.ban_chat_member(msg.chat.id, msg.reply_to_message.from_user.id)
                 await msg.bot.delete_message(msg.chat.id, msg.message_id)
@@ -46,7 +46,7 @@ async def handle_channel_post(msg: Message):
             await msg.bot.delete_message(msg.chat.id, response.message_id)
 
     if msg.text.startswith("/mute"):
-        if msg.from_user.id in chat_admins[msg.chat.id]:
+        if msg.from_user.id in admins_manager.chat_admins[msg.chat.id]:
             if msg.reply_to_message:
                 await msg.bot.restrict_chat_member(msg.chat.id, msg.reply_to_message.from_user.id, ChatPermissions(can_send_messages = False), until_date = timedelta(minutes = 5))
                 await msg.bot.delete_message(msg.chat.id, msg.message_id)
