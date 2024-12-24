@@ -1,17 +1,8 @@
 import asyncio
-# import re
-from datetime import timedelta
-# import os
 
-import aiogram.exceptions
-from aiogram import F, Router, enums
-from aiogram.filters import Command, StateFilter, ChatMemberUpdatedFilter, IS_NOT_MEMBER, IS_MEMBER, IS_ADMIN, ADMINISTRATOR, CREATOR
-from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, FSInputFile, URLInputFile, ChatPermissions, ChatMemberUpdated, MessageReactionUpdated
-
-from handlers.utils.Utility import Censorship
-from filters.custom_filters import MeAdminFilter
-from database.chats_admins import AdminsManager
+from aiogram import F, Router
+from aiogram.filters import ChatMemberUpdatedFilter, IS_NOT_MEMBER, IS_MEMBER, IS_ADMIN, ADMINISTRATOR, CREATOR
+from aiogram.types import Message, ChatMemberUpdated, MessageReactionUpdated
 
 
 status_router = Router()

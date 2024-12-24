@@ -5,7 +5,7 @@ from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message, ChatPermissions
 
-from database.chats_admins import AdminsManager
+from utils.chats_admins import AdminsManager
 
 commands_router = Router()
 

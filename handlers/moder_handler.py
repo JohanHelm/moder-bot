@@ -4,7 +4,7 @@ from aiogram import F, Router
 from aiogram.types import Message
 
 from filters.custom_filters import MeAdminFilter
-from handlers.utils.Utility import Censorship
+from utils.curse_censor import Censorship
 
 
 moder_router = Router()
