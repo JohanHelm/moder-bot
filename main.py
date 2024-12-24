@@ -1,5 +1,7 @@
 import asyncio
 import logging
+
+
 import nltk
 
 from pathlib import Path
@@ -24,8 +26,9 @@ async def start_bot():
     admins_manager = AdminsManager("moder_bot.db", bot)
     await admins_manager.update_admins()
     dp = Dispatcher(storage=MemoryStorage())
-    dp.message.middleware()
-    dp.include_routers(moder_router, commands_router, status_router)
+    dp.include_router(commands_router)
+    dp.include_router(moder_router)
+    dp.include_router(status_router)
     dp.workflow_data.update({"admins_manager": admins_manager})
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
