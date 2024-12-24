@@ -25,7 +25,7 @@ class AdminsManager:
             for admin in admins:
                 admin_id = admin.user.id
                 if admin_id == self.my_id:
-                    self.chats_me_admin.append(admin_id)
+                    self.chats_me_admin.append(chat_id)
                 self.chat_admins[chat_id] = self.chat_admins.get(chat_id, [])
                 self.chat_admins[chat_id].append(admin_id)
 
