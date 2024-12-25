@@ -4,7 +4,6 @@ import logging
 
 import nltk
 
-from pathlib import Path
 from aiogram import Bot, Dispatcher
 from aiogram.enums.parse_mode import ParseMode
 from aiogram.fsm.storage.memory import MemoryStorage
@@ -17,11 +16,12 @@ from handlers.status_handler import status_router
 from utils.chats_admins import AdminsManager
 
 
-nltk.download('punkt')
+nltk.download("punkt_tab")
 
 
 async def start_bot():
-    config = load_config(Path("secrets/.env"))
+    config = load_config("confidential/.env")
+    # config = load_config()
     bot = Bot(token=config.tg_bot.token, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     admins_manager = AdminsManager("moder_bot.db", bot)
     await admins_manager.update_admins()

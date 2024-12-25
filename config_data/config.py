@@ -1,6 +1,6 @@
 from dataclasses import dataclass
-from environs import Env
 from pathlib import Path
+from environs import Env
 
 @dataclass
 class DatabaseConfig:
@@ -22,9 +22,10 @@ class Config:
     # db: DatabaseConfig
 
 
-def load_config(secrets_file_path: Path | None = None) -> Config:
+def load_config(path: Path | None = None) -> Config:
     env: Env = Env()
-    env.read_env(secrets_file_path)
+    env.read_env(path)
+
     return Config(
         tg_bot=TgBot(
             token=env('BOT_TOKEN')),
