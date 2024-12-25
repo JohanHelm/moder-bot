@@ -15,8 +15,8 @@ async def moderate_swear(msg: Message):
     flag = await Censorship.main_filter(msg.text)
 
     if flag >= float(0.34):
+        #TODO рассылкой уведомить админов о матершиннике
         response = await msg.answer(f'Вы написали нецензурное слово @{msg.from_user.username}')
         await msg.bot.delete_message(msg.chat.id, msg.message_id)
         await asyncio.sleep(3)
         await msg.bot.delete_message(msg.chat.id, response.message_id)
-    # print(*msg, sep='\n')
