@@ -19,12 +19,9 @@ async def new_member(event: ChatMemberUpdated):
     # TODO Если админы не одобрили пользователя кикнуть его, закинуть его в бд с отметкой о кике
     # TODO После одобрения админами дать доступ юзверю к чату, закинуть его в бд
 
-    # TODO Если бота добавили в новый чат??
-    # TODO
-
-
 
 # TODO Отметить в бд ушедшего юзверя
+# TODO Отметить в БД сам ушол или забанили
 # тригер для ушедших пользователей
 @status_router.chat_member(ChatMemberUpdatedFilter(IS_NOT_MEMBER << IS_MEMBER))
 async def new_member(event: ChatMemberUpdated):
@@ -35,7 +32,7 @@ async def new_member(event: ChatMemberUpdated):
 # TODO написать фильтр
 # TODO написать изменение статуса юзверя в бд и в экземплдяре AdminsManager
 # TODO В том числе при повышении статуса бота отметить это в бд и в экземплдяре AdminsManager
-@status_router.chat_member(ChatMemberUpdatedFilter(IS_NOT_MEMBER >> IS_MEMBER))
+@status_router.chat_member(ChatMemberUpdatedFilter(IS_MEMBER >> IS_ADMIN))
 async def new_member(event: ChatMemberUpdated):
 
     msg = await event.answer(text = f"Здравствуй как у тебя {event.from_user.first_name} {event.from_user.last_name}") #, reply_to_message_id = "172" )
@@ -47,7 +44,7 @@ async def new_member(event: ChatMemberUpdated):
 # TODO написать фильтр
 # TODO написать изменение статуса юзверя в бд и в экземплдяре AdminsManager
 # TODO В том числе при повышении статуса бота отметить это в бд и в экземплдяре AdminsManager
-@status_router.chat_member(ChatMemberUpdatedFilter(IS_NOT_MEMBER >> IS_MEMBER))
+@status_router.chat_member(ChatMemberUpdatedFilter(IS_ADMIN >> IS_MEMBER))
 async def new_member(event: ChatMemberUpdated):
 
     msg = await event.answer(text = f"Здравствуй как у тебя {event.from_user.first_name} {event.from_user.last_name}") #, reply_to_message_id = "172" )

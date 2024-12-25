@@ -2,7 +2,6 @@ from aiogram import Bot
 from database.db_worker import Database
 
 
-
 class AdminsManager:
     def __init__(self, db_file, bot: Bot):
         self.db = Database(f"{db_file}")

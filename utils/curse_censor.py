@@ -54,14 +54,8 @@ class Censorship():
     @classmethod
     async def main_filter(cls, text):
         text_without_points = cls.deletepoints(text)
-
         clear_text = cls.deletestopwods(text_without_points)
-
         sch = check_swear.SwearingCheck(bins=len(clear_text.split(' ')), stop_words = cls.ban_words())
-
-        # TODO здесь нужен этот принт?
-        print(sch.predict_proba(clear_text))
-
         return max(sch.predict_proba(clear_text))
 
 
