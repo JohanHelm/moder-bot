@@ -44,21 +44,27 @@ class AdminsManager:
         await self.db.close()
 
 
-# class AdminsManager:
-#     def __init__(self, db_file, bot):
-#         self.db = Database(f"{db_file}")
-#         self.bot = bot
-#
-#     async def get_my_id(self, bot: Bot) -> int:
-#         my_user_data = await bot.get_me()
-#         return my_user_data.id
+# TODO Бота добавили в новый группу
+# TODO Запись чата в БД, запись всех админов группы в БД
 
+# TODO Пользователь зашёл в группу
+# TODO Добавить в БД?
 
-#Достать из базы все чаты, просмотреть всех админов во всех чатах, обновить всех админов во всех чатах в базе
-        # print(*await bot.get_chat_administrators('-1002400455551'), sep='\n')
-        # my_id = await get_my_id(bot)
-        # print(my_id)
-# словарь с ключами это id чатов, значение это списки с id админов чата.
+# TODO Пользователь вышел из группы
+# TODO Отметить об уходе в БД?
 
-# Отслеживать добавление пользователя в админы, добавлять в админы в базе
-# Удалять из админов в базе
+# TODO Пользователя сделали админом группы
+# TODO Отметить в БД?
+# TODO Отметить в self.chat_admins
+
+# TODO Пользователя из админа группы сделали обычным пользователем
+# TODO Отметить в БД?
+# TODO Отметить в self.chat_admins
+
+# TODO Бота сделали админом группы
+# TODO Отметить в БД?
+# TODO Отметить в self.chats_me_admin
+
+# TODO Бота из админа группы сделали обычным пользователем
+# TODO Отметить в БД?
+# TODO Отметить в self.chats_me_admin

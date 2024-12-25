@@ -5,6 +5,7 @@ class Database:
     def __init__(self, db_file: str):
         self.db_file = db_file
         self.connection = None
+        #TODO написать иниацилизацию базы
 
     async def connect(self):
         self.connection = await connect(self.db_file)
