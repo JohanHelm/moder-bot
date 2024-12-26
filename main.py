@@ -1,6 +1,6 @@
 import asyncio
 import logging
-
+from pathlib import Path
 
 import nltk
 
@@ -20,8 +20,7 @@ nltk.download("punkt_tab")
 
 
 async def start_bot():
-    config = load_config("confidential/.env")
-    # config = load_config()
+    config = load_config(Path("confidential/.env"))
     bot = Bot(token=config.tg_bot.token, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     admins_manager = AdminsManager("moder_bot.db", bot)
     await admins_manager.update_admins()
