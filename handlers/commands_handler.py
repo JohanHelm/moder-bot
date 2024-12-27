@@ -6,7 +6,8 @@ from aiogram.types import Message, ChatPermissions
 from aiogram.exceptions import TelegramForbiddenError
 
 from utils.chats_admins import AdminsManager
-from lexicon.response_gens import you_have_to_answer, u_r_not_admin
+from utils.message_generator import notify_chat_admins_on_report
+from utils.message_generator import you_have_to_answer, u_r_not_admin
 
 
 commands_router = Router()
@@ -46,11 +47,7 @@ async def mute_user(msg: Message, admins_manager: AdminsManager):
 @commands_router.message(Command(commands='report'))
 async def report_user(msg: Message, admins_manager: AdminsManager):
     if msg.reply_to_message:
-        for admin_id in admins_manager.chat_admins[msg.chat.id]:
-            try:
-                await msg.bot.forward_message(admin_id, msg.chat.id, msg.reply_to_message.message_id)
-            except TelegramForbiddenError:
-                print(f"bot was blocked by the admin with id {admin_id}")
+        await notify_chat_admins_on_report(admins_manager, msg)
     else:
         await you_have_to_answer(msg)
 
