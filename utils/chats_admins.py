@@ -29,42 +29,42 @@ class AdminsManager:
                 if not admin.user.is_bot:
                     self.chat_admins[chat_id].append(admin_id)
 
-    async def save_fresh_admins_to_db(self):
-        for chat_id in self.chat_admins.keys():
-            for admin_id in self.chat_admins[chat_id]:
-                await self.db.add_chat_admin(chat_id, admin_id)
+    # async def save_fresh_admins_to_db(self):
+    #     for chat_id in self.chat_admins.keys():
+    #         for admin_id in self.chat_admins[chat_id]:
+    #             await self.db.add_chat_admin(chat_id, admin_id)
 
     async def update_admins(self):
         await self.db.connect()
-        await self.db.clear_admins_table()
+        # await self.db.clear_admins_table()
         await self.get_my_id()
         await self.get_chats_from_db()
         await self.refresh_chats_admins()
-        await self.save_fresh_admins_to_db()
+        # await self.save_fresh_admins_to_db()
         await self.db.close()
 
+    async def add_new_admin(self, chat_id: int, new_admin_id: int):
+        if new_admin_id == self.my_id:
+            self.chats_me_admin.append(chat_id)
+        else:
+            self.chat_admins[chat_id].append(new_admin_id)
+
+    async def from_admin_to_user(self, chat_id: int, admin_id: int):
+        if admin_id == self.my_id:
+            self.chats_me_admin.remove(chat_id)
+        else:
+            if chat_id in self.chat_admins and admin_id in self.chat_admins[chat_id]:
+                self.chat_admins[chat_id].remove(admin_id)
+
+    async def add_new_user(self, user_id, is_bot, first_name, last_name, username):
+        await self.db.connect()
+        await self.db.add_user_to_db(user_id, is_bot, first_name, last_name, username)
+        await self.db.close()
 
 # TODO Бота добавили в новый группу
 # TODO Запись чата в БД, запись всех админов группы в БД
 
-# TODO Пользователь зашёл в группу
-# TODO Добавить в БД?
-
 # TODO Пользователь вышел из группы
 # TODO Отметить об уходе в БД?
 
-# TODO Пользователя сделали админом группы
-# TODO Отметить в БД?
-# TODO Отметить в self.chat_admins
 
-# TODO Пользователя из админа группы сделали обычным пользователем
-# TODO Отметить в БД?
-# TODO Отметить в self.chat_admins
-
-# TODO Бота сделали админом группы
-# TODO Отметить в БД?
-# TODO Отметить в self.chats_me_admin
-
-# TODO Бота из админа группы сделали обычным пользователем
-# TODO Отметить в БД?
-# TODO Отметить в self.chats_me_admin

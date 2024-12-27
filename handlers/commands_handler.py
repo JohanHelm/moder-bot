@@ -3,7 +3,6 @@ from datetime import timedelta
 from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message, ChatPermissions
-from aiogram.exceptions import TelegramForbiddenError
 
 from utils.chats_admins import AdminsManager
 from utils.message_generator import notify_chat_admins_on_report

@@ -46,6 +46,13 @@ class Database:
                )
            ''')
 
+        CREATOR = _MemberStatusMarker("creator")
+        ADMINISTRATOR = _MemberStatusMarker("administrator")
+        MEMBER = _MemberStatusMarker("member")
+        RESTRICTED = _MemberStatusMarker("restricted")
+        LEFT = _MemberStatusMarker("left")
+        KICKED
+
         await self.connection.commit()
 
     async def get_chats_from_db(self):
@@ -54,21 +61,21 @@ class Database:
             result = await cursor_obj.fetchall()
             return result
 
-    async def clear_admins_table(self):
-        async with self.connection.cursor() as cursor:
-            await cursor.execute(f"DELETE FROM admins")
-        await self.connection.commit()
+    # async def clear_admins_table(self):
+    #     async with self.connection.cursor() as cursor:
+    #         await cursor.execute(f"DELETE FROM admins")
+    #     await self.connection.commit()
 
-    async def add_chat_admin(self, chat_id: int, admin_id: int):
-        async with self.connection.cursor() as cursor:
-            await cursor.execute("INSERT INTO admins (chat_id, user_id) VALUES (?, ?)", (chat_id, admin_id,))
-        await self.connection.commit()
+    # async def add_chat_admin(self, chat_id: int, admin_id: int):
+    #     async with self.connection.cursor() as cursor:
+    #         await cursor.execute("INSERT INTO admins (chat_id, user_id) VALUES (?, ?)", (chat_id, admin_id,))
+    #     await self.connection.commit()
 
-    async def add_chats_to_db(self, chat_id: int, chat_type: str, chat_title: str, chat_username: str):
+    async def add_chat_to_db(self, chat_id: int, chat_type: str, chat_title: str, chat_username: str):
         async with self.connection.cursor() as cursor:
             await cursor.execute(
                 "INSERT OR IGNORE INTO chats (chat_id, chat_type, chat_title, chat_username) VALUES (?, ?, ?, ?)",
-                (chat_id, chat_type, chat_title, chat_username))
+                (chat_id, chat_type, chat_title, chat_username,))
         await self.connection.commit()
 
 
@@ -76,3 +83,12 @@ class Database:
         if self.connection:
             await self.connection.close()
             self.connection = None
+
+
+    async def add_user_to_db(self, user_id, is_bot, first_name, last_name, username):
+        async with self.connection.cursor() as cursor:
+            await cursor.execute(
+                "INSERT OR IGNORE INTO users (user_id, is_bot, first_name, last_name, username) VALUES (?, ?, ?, ?, ?)",
+                (user_id, is_bot, first_name, last_name, username,))
+        await self.connection.commit()
+
