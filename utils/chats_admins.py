@@ -26,7 +26,8 @@ class AdminsManager:
                 if admin_id == self.my_id:
                     self.chats_me_admin.append(chat_id)
                 self.chat_admins[chat_id] = self.chat_admins.get(chat_id, [])
-                self.chat_admins[chat_id].append(admin_id)
+                if not admin.user.is_bot:
+                    self.chat_admins[chat_id].append(admin_id)
 
     async def save_fresh_admins_to_db(self):
         for chat_id in self.chat_admins.keys():
