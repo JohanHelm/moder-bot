@@ -29,18 +29,12 @@ class AdminsManager:
                 if not admin.user.is_bot:
                     self.chat_admins[chat_id].append(admin_id)
 
-    # async def save_fresh_admins_to_db(self):
-    #     for chat_id in self.chat_admins.keys():
-    #         for admin_id in self.chat_admins[chat_id]:
-    #             await self.db.add_chat_admin(chat_id, admin_id)
 
     async def update_admins(self):
         await self.db.connect()
-        # await self.db.clear_admins_table()
         await self.get_my_id()
         await self.get_chats_from_db()
         await self.refresh_chats_admins()
-        # await self.save_fresh_admins_to_db()
         await self.db.close()
 
     async def add_new_admin(self, chat_id: int, new_admin_id: int):
