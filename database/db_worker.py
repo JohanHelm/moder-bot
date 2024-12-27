@@ -46,13 +46,6 @@ class Database:
                )
            ''')
 
-        CREATOR = _MemberStatusMarker("creator")
-        ADMINISTRATOR = _MemberStatusMarker("administrator")
-        MEMBER = _MemberStatusMarker("member")
-        RESTRICTED = _MemberStatusMarker("restricted")
-        LEFT = _MemberStatusMarker("left")
-        KICKED
-
         await self.connection.commit()
 
     async def get_chats_from_db(self):
