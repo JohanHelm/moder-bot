@@ -85,3 +85,10 @@ class Database:
                 (user_id, is_bot, first_name, last_name, username,))
         await self.connection.commit()
 
+
+    async def get_chats_for_chat_admins_from_db(self):
+        async with self.connection.cursor() as cursor:
+            cursor_obj = await cursor.execute("SELECT * FROM admins_chats")
+            result = await cursor_obj.fetchall()
+            return result
+

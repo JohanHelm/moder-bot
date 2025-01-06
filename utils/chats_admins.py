@@ -10,6 +10,7 @@ class AdminsManager:
         self.chats_ids = None
         self.chats_me_admin = []
         self.chat_admins = {}
+        self.chats_for_chat_admins = {}
 
     async def get_my_id(self):
         my_user_data = await self.bot.get_me()
@@ -29,12 +30,17 @@ class AdminsManager:
                 if not admin.user.is_bot:
                     self.chat_admins[chat_id].append(admin_id)
 
+    async def refresh_chats_for_chat_admins(self):
+        chats_for_chat_admins = await self.db.get_chats_for_chat_admins_from_db()
+        self.chats_for_chat_admins = dict(chats_for_chat_admins)
+
 
     async def update_admins(self):
         await self.db.connect()
         await self.get_my_id()
         await self.get_chats_from_db()
         await self.refresh_chats_admins()
+        await self.refresh_chats_for_chat_admins()
         await self.db.close()
 
     async def add_new_admin(self, chat_id: int, new_admin_id: int):
