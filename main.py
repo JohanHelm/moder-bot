@@ -2,7 +2,7 @@ import asyncio
 import logging
 from pathlib import Path
 
-import nltk
+# import nltk
 
 from aiogram import Bot, Dispatcher
 from aiogram.enums.parse_mode import ParseMode
@@ -16,7 +16,7 @@ from handlers.status_handler import status_router
 from utils.tg_entities import AdminsManager
 
 
-nltk.download("punkt_tab")
+# nltk.download("punkt_tab")
 
 
 async def start_bot():
@@ -26,7 +26,7 @@ async def start_bot():
     await admins_manager.update_admins()
     dp = Dispatcher(storage=MemoryStorage())
     dp.include_router(commands_router)
-    dp.include_router(moder_router)
+    # dp.include_router(moder_router)
     dp.include_router(status_router)
     dp.workflow_data.update({"admins_manager": admins_manager})
     await bot.delete_webhook(drop_pending_updates=True)
