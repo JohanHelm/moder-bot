@@ -17,7 +17,7 @@ async def new_member(event: ChatMemberUpdated, admins_manager: AdminsManager):
     await msg.bot.restrict_chat_member(event.chat.id, event.new_chat_member.user.id,
                                        ChatPermissions(can_send_messages=False))
     await admins_manager.add_new_user(event.from_user.id, event.from_user.is_bot, event.from_user.first_name, event.from_user.last_name, event.from_user.username)
-    await asyncio.sleep(10)
+    await asyncio.sleep(30)
     await msg.bot.restrict_chat_member(event.chat.id, event.new_chat_member.user.id,
                                        ChatPermissions(can_send_messages=True))
     # await msg.bot.ban_chat_member(event.chat.id, event.new_chat_member.user.id, revoke_messages=True)
