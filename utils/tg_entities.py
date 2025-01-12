@@ -2,6 +2,24 @@ from aiogram import Bot
 from database.db_worker import Database
 
 
+class CommonTgEnt:
+    def __init__(self, db_file, bot: Bot):
+        self.db = Database(f"{db_file}")
+        self.bot = bot
+        self.chats_ids = None
+
+
+class MeTgBot():
+    def __init__(self):
+        self.my_own_id = None
+        self.chats_me_in = []
+        self.chats_me_admin = []
+
+    async def get_my_id(self):
+        my_user_data = await self.bot.get_me()
+        self.my_own_id = my_user_data.id
+
+
 class AdminsManager:
     def __init__(self, db_file, bot: Bot):
         self.db = Database(f"{db_file}")

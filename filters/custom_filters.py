@@ -1,6 +1,6 @@
 from aiogram.filters import BaseFilter
 from aiogram.types import Message
-from utils.chats_admins import AdminsManager
+from utils.tg_entities import AdminsManager
 
 
 

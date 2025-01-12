@@ -3,7 +3,7 @@ import asyncio
 from aiogram.types import Message
 from aiogram.exceptions import TelegramForbiddenError
 
-from utils.chats_admins import AdminsManager
+from utils.tg_entities import AdminsManager
 from lexicon.response_text import you_have_to_answer_txt, u_r_not_admin_txt, curse_moder_txt, report_from_user_txt
 
 async def notify_chat_admins_on_report(admins_manager: AdminsManager, msg: Message):

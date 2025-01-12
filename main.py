@@ -13,7 +13,7 @@ from config_data.config import load_config
 from handlers.moder_handler import moder_router
 from handlers.commands_handler import commands_router
 from handlers.status_handler import status_router
-from utils.chats_admins import AdminsManager
+from utils.tg_entities import AdminsManager
 
 
 nltk.download("punkt_tab")

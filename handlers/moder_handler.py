@@ -6,7 +6,7 @@ from aiogram.types import Message
 from filters.custom_filters import MeAdminFilter
 from utils.curse_censor import Censorship
 from utils.message_generator import notify_chat_admins_on_curse
-from utils.chats_admins import AdminsManager
+from utils.tg_entities import AdminsManager
 
 
 moder_router = Router()

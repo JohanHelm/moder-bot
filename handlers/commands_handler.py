@@ -4,7 +4,7 @@ from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message, ChatPermissions
 
-from utils.chats_admins import AdminsManager
+from utils.tg_entities import AdminsManager
 from utils.message_generator import notify_chat_admins_on_report
 from utils.message_generator import you_have_to_answer, u_r_not_admin
 

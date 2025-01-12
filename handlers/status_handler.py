@@ -4,7 +4,7 @@ from aiogram import F, Router
 from aiogram.filters import ChatMemberUpdatedFilter, IS_NOT_MEMBER, IS_MEMBER, IS_ADMIN, ADMINISTRATOR, CREATOR
 from aiogram.types import Message, ChatMemberUpdated, MessageReactionUpdated, ChatPermissions
 
-from utils.chats_admins import AdminsManager
+from utils.tg_entities import AdminsManager
 from lexicon.response_text import wellcome
 
 status_router = Router()
