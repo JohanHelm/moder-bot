@@ -2,22 +2,63 @@ from aiogram import Bot
 from database.db_worker import Database
 
 
-class CommonTgEnt:
+class MeTgBot:
+    def __init__(self, bot: Bot):
+        self.my_own_id = self.get_my_id(bot)
+        self.chat_ids_me_in = []
+        self.chat_ids_me_admin = []
+
+    async def get_my_id(self, bot: Bot):
+        my_user_data = await bot.get_me()
+        self.my_own_id = my_user_data.id
+
+
+class TgChat:
+    def __init__(self, chat_id: int):
+        self.chat_id = chat_id
+        self.chat_rules_tg_msg_link: str = ""
+        self.chat_admins = []
+        self.chat_for_chat_admins = []
+
+    async def add_chat_rules_tg_msg_link(self):
+        pass
+
+    async def add_chat_for_chat_admins(self):
+        pass
+
+
+class MainManager:
     def __init__(self, db_file, bot: Bot):
         self.db = Database(f"{db_file}")
         self.bot = bot
-        self.chats_ids = None
+        self.me_tg_bot = MeTgBot(bot)
+        self.chats_list = []
+
+    async def get_chats_from_db(self) -> list[int]:
+        chats_ids = [item[0] for item in await self.db.get_chats_from_db()]
+        return chats_ids
+
+    async def create_tg_chats(self, chats_ids: list[int]):
+        for chat_id in chats_ids:
+            self.chats_list.append(await self.create_tg_chat(chat_id))
+
+    async def create_tg_chat(self, chat_id: int) -> TgChat:
+        tg_chat = TgChat(chat_id)
+        chat_admins = await self.bot.get_chat_administrators(chat_id)
+        for admin in chat_admins:
+            admin_id = admin.user.id
+            if admin_id == self.me_tg_bot.my_own_id:
+                self.me_tg_bot.chat_ids_me_admin.append(chat_id)
+            if not admin.user.is_bot:
+                tg_chat.chat_admins.append(admin_id)
+        return tg_chat
 
 
-class MeTgBot():
-    def __init__(self):
-        self.my_own_id = None
-        self.chats_me_in = []
-        self.chats_me_admin = []
-
-    async def get_my_id(self):
-        my_user_data = await self.bot.get_me()
-        self.my_own_id = my_user_data.id
+    async def init_main_manager(self):
+        await self.db.connect()
+        chats_ids = await self.get_chats_from_db()
+        await self.create_tg_chats(chats_ids)
+        await self.db.close()
 
 
 class AdminsManager:
